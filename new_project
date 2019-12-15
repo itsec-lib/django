@@ -1,0 +1,106 @@
+Create new Django project
+https://www.codingforentrepreneurs.com/blog/create-a-blank-django-project/
+
+1. Create Dev Directory for General Project Storage
+
+cd ~/
+mkdir Dev
+cd Dev
+
+2. Create Project Directory
+
+We'll call our project "cfehome"
+
+cd ~/Dev
+mkdir cfehome
+cd cfehome
+mkdir src
+
+src is where your django project will be stored.
+3. Create Virtual Environment with Pipenv
+
+cd src
+pipenv install django==2.2 --python 3.6
+
+Django 2.2 is the current LTS version which is why we've chosen it here. LTS means Long Term Support release. It will be supported until 2022.
+4. Activate Pipenv Shell
+
+cd ~/Dev/cfehome/src
+pipenv shell
+
+5. Create Django Project
+
+django-admin startproject cfehome .
+
+The trailing . is very important here.
+6. Create New Settings Module
+
+The purpose of this is to work in both production and local environments. It's also called Staging Django.
+6.1. Create Settings Directory
+
+cd ~/Dev/cfehome/src/
+pipenv shell
+cd cfehome
+mkdir settings && cd settings
+
+6.2. Create __init__.py in the new Settings folder to make it a module
+
+echo "from .base import *
+
+from .production import *
+
+try:
+   from .local import *
+except:
+   pass
+" > __init__.py
+
+    For reference, this was done in ~/Dev/cfehome/src/cfehome/settings/ on mac/linux or \Users\YourName\Dev\cfehome\src\cfehome\settings\ on windows.
+
+6.3. Change BASE_DIR in settings.py:
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# to
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+6.4. Move default settings.py into new settings module and rename settings.py to base.py:
+
+# mac/linux
+mv ~/Dev/cfehome/src/cfehome/settings.py ~/Dev/cfehome/src/cfehome/settings/base.py
+
+# windows
+move \Users\YourName\Dev\cfehome\src\cfehome\settings.py \Users\YourName\Dev\cfehome\src\settings\base.py
+
+6.5. Copy Local settings (local.py) to make new (base.py & production.py) file:
+
+# mac/linux
+cp ~/Dev/cfehome/src/cfehome/settings/base.py ~/Dev/cfehome/src/cfehome/settings/local.py
+
+cp ~/Dev/cfehome/src/cfehome/settings/base.py ~/Dev/cfehome/src/cfehome/settings/production.py
+
+#windows
+copy \Users\YourName\Dev\cfehome\src\cfehome\settings\base.py \Users\YourName\Dev\cfehome\src\cfehome\settings\local.py
+
+copy \Users\YourName\Dev\cfehome\src\cfehome\settings\base.py \Users\YourName\Dev\cfehome\src\cfehome\settings\production.py
+
+7. Some other common installations (optional):
+
+# for a postgresql database
+pipenv install psycopg2
+
+# for a mysql database
+pipenv install mysqlclient #python3
+pipenv install MySQL-python #python2
+
+# for use on heroku
+pipenv install gunicorn dj-database-url
+
+pipenv install django-crispy-forms
+pipenv install pillow
+
+8. Run Migration & Createsuperuser
+
+python manage.py migrate
+python manage.py createsuperuser
+
+All done.
