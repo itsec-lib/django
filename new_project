@@ -1,10 +1,22 @@
 1) Create directory for a new project
 mkdir ~/projects/inception
 
-2) Create virtual environment for the project
-python3 -m venv .
+2) Install VirtualEnv package
+pip3 install virtualenv
 
-3) Some other common installations (optional):
+2) Create virtual environment for the project
+virtualenv -p python3 .
+
+3) Install django framework
+pip3 install django
+
+4) Create new django project
+django-admin startproject avalanche
+
+5) Run new django project
+python manage.py runserver
+
+6) Some other common installations (optional):
 
 # for a postgresql database
 pipenv install psycopg2
@@ -19,7 +31,7 @@ pipenv install gunicorn dj-database-url
 pipenv install django-crispy-forms
 pipenv install pillow
 
-4) Run Migration & Createsuperuser
+7) Run Migration & Createsuperuser
 
 python manage.py migrate
 python manage.py createsuperuser
