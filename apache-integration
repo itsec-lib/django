@@ -1,24 +1,35 @@
+apt-get install python3-pip apache2 libapache2-mod-wsgi-py3 apache2-dev
+cd /var/www
+virtualenv -p python3 dj-lab
+cd dj-lab
+source bin/activate
 pip install django
-apt-get install python3-pip apache2 libapache2-mod-wsgi-py3
 pip install mod_wsgi
 
-Content of the file: /etc/apache2/sites-available/000-default.conf
+#Configure and test django web server
+django-admin startproject casper
+cd casper
+python manage.py runserver
+
+#Integration with Apache
+
+#Content of the file: /etc/apache2/sites-available/000-default.conf
 
 <VirtualHost *:80>
  ServerName smp.test.lab
- DocumentRoot /home/user/projects/dj-lab/casper
- WSGIDaemonProcess casper python-path=/home/user/projects/dj-lab/casper python-home=/home/user/projects/dj-lab
+ DocumentRoot /var/www/dj-lab/casper
+ WSGIDaemonProcess casper python-path=/var/www/dj-lab/casper python-home=/var/www/dj-lab
  WSGIProcessGroup casper
- WSGIScriptAlias / /home/user/projects/dj-lab/casper/casper/wsgi.py
- <directory /home/user/projects/dj-lab/casper>
+ WSGIScriptAlias / /var/www/dj-lab/casper/casper/wsgi.py
+ <directory /var/www/dj-lab/casper>
    AllowOverride all
    Require all granted
    Options FollowSymlinks
  </directory>
 
- Alias /static/ /home/user/projects/dj-lab/casper/static
+ Alias /static/ /var/www/dj-lab/casper/static
 
- <Directory /home/user/projects/dj-lab/casper/static>
+ <Directory /var/www/dj-lab/casper/static>
   Require all granted
  </Directory>
 </VirtualHost>
