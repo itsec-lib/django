@@ -1,0 +1,24 @@
+pip install django
+apt-get install python3-pip apache2 libapache2-mod-wsgi-py3
+pip install mod_wsgi
+
+Content of the file: /etc/apache2/sites-available/000-default.conf
+
+<VirtualHost *:80>
+ ServerName smp.test.lab
+ DocumentRoot /home/user/projects/dj-lab/casper
+ WSGIDaemonProcess casper python-path=/home/user/projects/dj-lab/casper python-home=/home/user/projects/dj-lab
+ WSGIProcessGroup casper
+ WSGIScriptAlias / /home/user/projects/dj-lab/casper/casper/wsgi.py
+ <directory /home/user/projects/dj-lab/casper>
+   AllowOverride all
+   Require all granted
+   Options FollowSymlinks
+ </directory>
+
+ Alias /static/ /home/user/projects/dj-lab/casper/static
+
+ <Directory /home/user/projects/dj-lab/casper/static>
+  Require all granted
+ </Directory>
+</VirtualHost>
