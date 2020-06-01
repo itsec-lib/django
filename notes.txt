@@ -1,2 +1,11 @@
 Email validation tool:
 https://pypi.org/project/validate_email/
+
+Django SSL development server:
+https://github.com/teddziuba/django-sslserver
+
+User authentication against local and social networks accounts:
+https://django-allauth.readthedocs.io/
+
+ADFS plugin for integration with MS AD:
+https://github.com/thenewguy/django-allauth-adfs
